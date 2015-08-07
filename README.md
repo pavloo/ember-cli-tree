@@ -1,4 +1,4 @@
-# Ember-cli-tree
+# Ember-cli-tree WIP
 
 Simple tree UI component for Ember. No JQuery. Pure handlebars and recursion.
 
