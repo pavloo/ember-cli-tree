@@ -1,0 +1,9 @@
+{{#if eager}}
+  <div style="{{unless flag displayNone}}">
+    {{yield}}
+  </div>
+{{else}}
+  {{#if flag}}
+    {{yield}}
+  {{/if}}
+{{/if}}

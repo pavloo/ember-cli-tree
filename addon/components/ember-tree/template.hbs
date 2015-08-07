@@ -1,0 +1,24 @@
+<li>{{yield node isExpanded}}</li>
+{{#ember-tree/if-helper flag=isExpanded eager=eagerCreate}}
+  {{#each children as |child|}}
+    {{#ember-tree expandAction="expandChild" eagerCreate=eagerCreate node=child as |child isExpanded|}}
+      {{yield child isExpanded}}
+    {{/ember-tree}}
+  {{/each}}
+  {{#if showOnly}}
+    <div style={{unless showRest displayNone}}>
+      {{#each childrenRest as |child|}}
+        {{#ember-tree expandAction="expandChild" showOnly=showOnly eagerCreate=eagerCreate node=child as |child isExpanded|}}
+          {{yield child isExpanded}}
+        {{/ember-tree}}
+      {{/each}}
+    </div>
+    <div style={{if showRest displayNone}}>
+      {{#if childrenRest.length}}
+        <a href="#" {{action 'showOther'}}>
+          Show Other {{childrenRest.length}}
+        </a>
+      {{/if}}
+    </div>
+  {{/if}}
+{{/ember-tree/if-helper}}
