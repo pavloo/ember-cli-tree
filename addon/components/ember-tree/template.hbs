@@ -6,14 +6,14 @@
     {{/ember-tree}}
   {{/each}}
   {{#if showOnly}}
-    <div style={{unless showRest displayNone}}>
+    <div style={{showRestStyle}}>
       {{#each childrenRest as |child|}}
         {{#ember-tree expandAction="expandChild" showOnly=showOnly eagerCreate=eagerCreate node=child as |child isExpanded|}}
           {{yield child isExpanded}}
         {{/ember-tree}}
       {{/each}}
     </div>
-    <div style={{if showRest displayNone}}>
+    <div style={{showRestStyle}}>
       {{#if childrenRest.length}}
         <a href="#" {{action 'showOther'}}>
           Show Other {{childrenRest.length}}

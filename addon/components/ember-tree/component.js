@@ -15,10 +15,7 @@ export default Ember.Component.extend({
   init(){
     this._super();
     this.setProperties({
-      showOnly: this.get('showOnly'),
-      // to suppress the warning
-      // http://emberjs.com/deprecations/v1.x/#toc_binding-style-attributes
-      displayNone: new Ember.Handlebars.SafeString('display: none;')
+      showOnly: this.get('showOnly')
     });
   },
 
@@ -71,6 +68,16 @@ export default Ember.Component.extend({
     }
 
     return children.slice(showOnly, children.length);
+  }),
+
+  // to suppress the warning
+  // http://emberjs.com/deprecations/v1.x/#toc_binding-style-attributes
+  showRestStyle: Ember.computed(function(){
+    if (this.get('showRest')){
+      return new Ember.Handlebars.SafeString('display: none;');
+    } else {
+      return new Ember.Handlebars.SafeString();
+    }
   }),
 
   actions: {
