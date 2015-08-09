@@ -69,6 +69,8 @@ format parameter - # of children _left_
 sub trees on top level. If defined,
 _node.isExpanded_ have to be manually set, e. g.
 
+See tests for more.
+
 ```javascript
 ...
 expandActionHander(node, isExpanded){
