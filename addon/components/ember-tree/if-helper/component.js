@@ -12,7 +12,7 @@ export default Ember.Component.extend({
     if (!this.get('flag')){
       return new Ember.Handlebars.SafeString('display: none;');
     } else {
-      return new Ember.Handlebars.SafeString();
+      return new Ember.Handlebars.SafeString('');
     }
   })
 });

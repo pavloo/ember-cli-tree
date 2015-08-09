@@ -76,8 +76,24 @@ test('eagerCreate=true', function(assert){
   );
 
   const $tree = this.$();
-  window.tree = $tree;
   assert.equal($tree.find('li').size(), 5);
+  // TODO: add more asserts
+  $tree.find('span:contains("expand-3")').click();
+});
+
+test('eagerCreate=false', function(assert){
+  assert.expect(1);
+
+  const treeHead = Ember.$.extend(true, {}, fixtureTreeModel);
+  treeHead.isExpanded = false;
+  this.set('node', treeHead);
+  this.render(
+    hbs`{{#ember-tree eagerCreate=false node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
+  );
+
+  const $tree = this.$();
+  window.tree = $tree;
+  assert.equal($tree.find('li').size(), 1);
   // TODO: add more asserts
   $tree.find('span:contains("expand-3")').click();
 });

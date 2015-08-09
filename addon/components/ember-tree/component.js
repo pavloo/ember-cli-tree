@@ -7,10 +7,11 @@ export default Ember.Component.extend({
   classNames: ['ember-tree'],
 
   childrenKey: 'children',
-  eagerCreate: false,
+  eagerCreate: true,
   expandEvent: 'click',
   showRest: false,
   isExpanded: Ember.computed.alias('node.isExpanded'),
+  showOtherTextFmt: 'Show Other %@',
 
   init(){
     this._super();
@@ -70,13 +71,24 @@ export default Ember.Component.extend({
     return children.slice(showOnly, children.length);
   }),
 
+  showOtherText: Ember.computed('showOtherTextFmt', 'showOnly', 'childrenRest.length', function(){
+    const showOnly = this.get('showOnly');
+    const showOtherTextFmt = this.get('showOtherTextFmt');
+    const numberLeft = this.get('childrenRest.length');
+
+    if (!showOnly || !numberLeft){
+      return '';
+    }
+    return Ember.String.fmt(showOtherTextFmt, numberLeft);
+  }),
+
   // to suppress the warning
   // http://emberjs.com/deprecations/v1.x/#toc_binding-style-attributes
   showRestStyle: Ember.computed(function(){
     if (this.get('showRest')){
       return new Ember.Handlebars.SafeString('display: none;');
     } else {
-      return new Ember.Handlebars.SafeString();
+      return new Ember.Handlebars.SafeString('');
     }
   }),
 
