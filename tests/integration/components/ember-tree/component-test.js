@@ -62,9 +62,9 @@ test('showOnly property', function(assert){
   );
 
   const $tree = this.$();
-  window.tree = $tree;
-  assert.equal($tree.find('li').size(), 3);
+  assert.equal($tree.find('.hidden').size(), 3);
   $tree.find('a:contains("1")').click();
+  assert.equal($tree.find('.hidden').size(), 0);
 });
 
 test('eagerCreate=true', function(assert){
