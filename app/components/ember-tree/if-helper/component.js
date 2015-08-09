@@ -1,1 +1,0 @@
-export { default } from 'ember-cli-tree/components/ember-tree/if-helper/component';

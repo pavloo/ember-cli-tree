@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from './template';
+import layout from '../../templates/components/ember-tree/trigger-expand';
 
 export default Ember.Component.extend({
   layout: layout,
