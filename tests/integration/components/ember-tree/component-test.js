@@ -35,10 +35,12 @@ const fixtureTreeModel = {
   ]
 };
 
+const { copy } = Ember;
+
 test('call expandAction on inner node', function(assert){
   assert.expect(3);
 
-  this.set('node', Ember.$.extend(true, {}, fixtureTreeModel));
+  this.set('node', copy(fixtureTreeModel, true));
   this.render(
     hbs`{{#ember-tree expandAction="expandActionHandler" node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand-{{node.id}}{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
   );
@@ -56,7 +58,7 @@ test('call expandAction on inner node', function(assert){
 test('showOnly property', function(assert){
   assert.expect(2);
 
-  this.set('node', Ember.$.extend(true, {}, fixtureTreeModel));
+  this.set('node', copy(fixtureTreeModel, true));
   this.render(
     hbs`{{#ember-tree showOnly=1 showOtherTextFmt="rest %@" node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
   );
@@ -67,24 +69,25 @@ test('showOnly property', function(assert){
   assert.equal($tree.find('.other-children.hidden').size(), 0);
 });
 
-test('eagerCreate=true', function(assert){
-  assert.expect(1);
+test('eagerCreate=true, expand subtree', function(assert){
+  assert.expect(3);
 
-  this.set('node', Ember.$.extend(true, {}, fixtureTreeModel));
+  this.set('node', copy(fixtureTreeModel, true));
   this.render(
     hbs`{{#ember-tree eagerCreate=true node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
   );
 
   const $tree = this.$();
-  assert.equal($tree.find('li').size(), 5);
-  // TODO: add more asserts
-  $tree.find('span:contains("expand-3")').click();
+  assert.equal($tree.find('li').size(), 5, 'total number of nodes');
+  assert.equal($tree.find('.hidden').size(), 4, 'all children hidden except first');
+  $tree.find('span:contains("expand")')[2].click();
+  assert.equal($tree.find('.hidden').size(), 3);
 });
 
 test('eagerCreate=false', function(assert){
   assert.expect(1);
 
-  const treeHead = Ember.$.extend(true, {}, fixtureTreeModel);
+  const treeHead = copy(fixtureTreeModel, true);
   treeHead.isExpanded = false;
   this.set('node', treeHead);
   this.render(
