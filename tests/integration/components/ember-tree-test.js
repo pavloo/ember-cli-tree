@@ -97,5 +97,20 @@ test('eagerCreate=false', function(assert){
 
   const $tree = this.$();
   assert.equal($tree.find('li').size(), 1);
-  $tree.find('span:contains("expand-3")').click();
+});
+
+test('expand root if no action handler passed', function(assert){
+  assert.expect(2);
+
+  const treeHead = copy(fixtureTreeModel, true);
+  treeHead.isExpanded = false;
+  this.set('node', treeHead);
+  this.render(
+    hbs`{{#ember-tree node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
+  );
+
+  const $tree = this.$();
+  assert.equal($tree.find('.hidden').size(), 5);
+  $tree.find('span:contains("expand")').first().click();
+  assert.equal($tree.find('.hidden').size(), 4);
 });

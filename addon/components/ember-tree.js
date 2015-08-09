@@ -31,7 +31,11 @@ export default Ember.Component.extend({
     this.set('$areaExpand', $areaExpand);
     $areaExpand.on(expandEvent, ()=>{
       run(()=>{
-        this.sendAction('expandAction', this.get('node'), !this.get('isExpanded'));
+        if (this.get('expandAction')){
+          this.sendAction('expandAction', this.get('node'), !this.get('isExpanded'));
+        } else {
+          Ember.set(this.get('node'), 'isExpanded', !this.get('isExpanded'));
+        }
       });
     });
   },
