@@ -1,5 +1,10 @@
 import Ember from 'ember';
-import layout from './template';
+import layout from '../templates/components/ember-tree';
+
+const {
+  computed,
+  run
+} = Ember;
 
 export default Ember.Component.extend({
   layout: layout,
@@ -7,20 +12,12 @@ export default Ember.Component.extend({
   classNames: ['ember-tree'],
 
   childrenKey: 'children',
-  eagerCreate: false,
+  eagerCreate: true,
   expandEvent: 'click',
   showRest: false,
-  isExpanded: Ember.computed.alias('node.isExpanded'),
-
-  init(){
-    this._super();
-    this.setProperties({
-      showOnly: this.get('showOnly'),
-      // to suppress the warning
-      // http://emberjs.com/deprecations/v1.x/#toc_binding-style-attributes
-      displayNone: new Ember.Handlebars.SafeString('display: none;')
-    });
-  },
+  isExpanded: computed.alias('node.isExpanded'),
+  showOtherTextFmt: 'Show Other %@',
+  sjowOnly: false,
 
   didInsertElement(){
     const $areaExpand = Ember.$(this.$().find('.ember-tree-node-trigger-expand')[0]);
@@ -33,9 +30,12 @@ export default Ember.Component.extend({
 
     this.set('$areaExpand', $areaExpand);
     $areaExpand.on(expandEvent, ()=>{
-      Ember.run(()=>{
-        this.toggleProperty('isExpanded');
-        this.sendAction('expandAction', this.get('node'), { isExpanded: this.get('isExpanded') });
+      run(()=>{
+        if (this.get('expandAction')){
+          this.sendAction('expandAction', this.get('node'), !this.get('isExpanded'));
+        } else {
+          Ember.set(this.get('node'), 'isExpanded', !this.get('isExpanded'));
+        }
       });
     });
   },
@@ -48,7 +48,7 @@ export default Ember.Component.extend({
     }
   },
 
-  children: Ember.computed('node', 'childrenKey', 'showOnly', function(){
+  children: computed('node', 'childrenKey', 'showOnly', function(){
     const key = this.get('childrenKey');
     const children = this.get('node')[key];
 
@@ -61,7 +61,7 @@ export default Ember.Component.extend({
     return children.slice(0, showOnly);
   }),
 
-  childrenRest: Ember.computed('node', 'childrenKey', 'showOnly', function(){
+  childrenRest: computed('node', 'childrenKey', 'showOnly', function(){
     const key = this.get('childrenKey');
     const showOnly = this.get('showOnly');
     const children = this.get('node')[key];
@@ -73,13 +73,32 @@ export default Ember.Component.extend({
     return children.slice(showOnly, children.length);
   }),
 
+  showOtherText: computed('showOtherTextFmt', 'showOnly', 'childrenRest.length', function(){
+    const showOnly = this.get('showOnly');
+    const showOtherTextFmt = this.get('showOtherTextFmt');
+    const numberLeft = this.get('childrenRest.length');
+
+    if (!showOnly || !numberLeft){
+      return '';
+    }
+    return Ember.String.fmt(showOtherTextFmt, numberLeft);
+  }),
+
+  hasRest: computed('showOnly', 'childrenRest.length', function(){
+    return !!this.get('showOnly') && !!this.get('childrenRest.length');
+  }),
+
   actions: {
     showOther(){
       this.toggleProperty('showRest');
     },
 
-    expandChild(node, obj){
-      this.sendAction('expandAction', node, obj);
+    expandChild(node, isExpanded){
+      if (this.get('expandAction')){
+        this.sendAction('expandAction', node, isExpanded);
+      } else {
+        Ember.set(node, 'isExpanded', isExpanded);
+      }
     }
   }
 });

@@ -1,3 +1,7 @@
 .ember-tree {
-    list-style: none;
+  list-style: none;  
+}
+
+.ember-tree .hidden{
+  display: none;
 }

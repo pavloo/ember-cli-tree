@@ -5,20 +5,18 @@
       {{yield child isExpanded}}
     {{/ember-tree}}
   {{/each}}
-  {{#if showOnly}}
-    <div style={{unless showRest displayNone}}>
+  {{#if hasRest}}
+    <div class="other-children {{unless showRest 'hidden'}}">
       {{#each childrenRest as |child|}}
         {{#ember-tree expandAction="expandChild" showOnly=showOnly eagerCreate=eagerCreate node=child as |child isExpanded|}}
           {{yield child isExpanded}}
         {{/ember-tree}}
       {{/each}}
     </div>
-    <div style={{if showRest displayNone}}>
-      {{#if childrenRest.length}}
-        <a href="#" {{action 'showOther'}}>
-          Show Other {{childrenRest.length}}
-        </a>
-      {{/if}}
+    <div class={{if showRest 'hidden'}}>
+      <a href="#" {{action 'showOther'}}>
+        {{showOtherText}}
+      </a>
     </div>
   {{/if}}
 {{/ember-tree/if-helper}}
