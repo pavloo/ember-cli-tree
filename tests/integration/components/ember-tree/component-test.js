@@ -45,9 +45,9 @@ test('call expandAction on inner node', function(assert){
     hbs`{{#ember-tree expandAction="expandActionHandler" node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand-{{node.id}}{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
   );
 
-  this.on('expandActionHandler', (node, obj)=>{
+  this.on('expandActionHandler', (node, isExpanded)=>{
     assert.equal(node.label, 'Level1-2nd', 'correct node');
-    assert.deepEqual(obj, { isExpanded: true }, 'is expanded');
+    assert.equal(isExpanded, true, 'is expanded');
   });
 
   const $tree = this.$();

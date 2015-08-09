@@ -64,6 +64,19 @@ for details), if _showOnly_ is set, the value of this property is the value of
 link text, clicking on which makes hidden children to be shown, where 1st
 format parameter - # of children _left_
 (_Default_: 'Show Other %@')
+* **expandAction** - _String_, name of an action, which handles expansion of
+sub trees on top level. If defined,
+_node.isExpanded_ have to be manually set, e. g.
+
+```javascript
+...
+expandActionHander(node, isExpanded){
+  // some custom handling, then
+  Ember.set(node, 'isExpanded', isExpanded);
+}
+...
+
+```
 
 # Contribution
 

@@ -31,8 +31,7 @@ export default Ember.Component.extend({
     this.set('$areaExpand', $areaExpand);
     $areaExpand.on(expandEvent, ()=>{
       run(()=>{
-        this.toggleProperty('isExpanded');
-        this.sendAction('expandAction', this.get('node'), { isExpanded: this.get('isExpanded') });
+        this.sendAction('expandAction', this.get('node'), !this.get('isExpanded'));
       });
     });
   },
@@ -90,8 +89,12 @@ export default Ember.Component.extend({
       this.toggleProperty('showRest');
     },
 
-    expandChild(node, obj){
-      this.sendAction('expandAction', node, obj);
+    expandChild(node, isExpanded){
+      if (this.get('expandAction')){
+        this.sendAction('expandAction', node, isExpanded);
+      } else {
+        Ember.set(node, 'isExpanded', isExpanded);
+      }
     }
   }
 });
