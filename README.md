@@ -10,8 +10,8 @@ ember install ember-cli-tree
 
 # Usage
 
-The only thing you need to care of is how your tree node looks like.
-Here is the example tree to be rendered:
+The only thing you need to care of is how your single tree node looks like.
+Here is an example tree object:
 
 ```javascript
 const treeHead = {
@@ -31,14 +31,15 @@ const treeHead = {
   ]
 }
 ```
+Simple usage:
 ```handlebars
 {{#ember-tree node=treeHead as |node isExpanded|}}
   {{#ember-tree/trigger-expand}}
-  {{#if isExpanded}}
-    -
-  {{else}}
-    +
-  {{/if}}
+    {{#if isExpanded}}
+      -
+    {{else}}
+      +
+    {{/if}}
   {{/ember-tree/trigger-expand}}
   {{node.label}}
 {{/ember-tree}}
@@ -46,10 +47,10 @@ const treeHead = {
 
 ## Component's API
 * **eagerCreate** - _boolean_, determines, how tree is rendered:
-1. if set to _true_, the whole tree is placed into DOM upon component's
-insertion (show/hide via _display: none_)
-2. if set to _false_, every node is inserted individually _lazily_ upon
-parent's node expansion (show/hide via _if_ helper)
+  1. if set to _true_, the whole tree is placed into DOM upon component's
+insertion (show/hide is implemented via _display: none_)
+  2. if set to _false_, every node is inserted individually _lazily_ upon
+parent's node expansion (show/hide is implemented via _if_ helper)
 (_Default_: true)
 * **childrenKey** - _String_, the key of children attribute in tree node object
 (_Default_: 'children')
@@ -58,7 +59,7 @@ triggered on _ember-tree/trigger-expand_ component
 (_Default_: 'click')
 * **showOnly** - _Number_, the number of node's children shown by default
 (_Default_: undefined)
-* **showOtherTextFmt** - _String_(format string, see
+* **showOtherTextFmt** - _String_ (format string, see
 [Ember.String.fmt](http://emberjs.com/api/classes/Ember.String.html#method_fmt)
 for details), if _showOnly_ is set, the value of this property is the value of
 link text, clicking on which makes hidden children to be shown, where 1st
@@ -77,6 +78,9 @@ expandActionHander(node, isExpanded){
 ...
 
 ```
+
+# TODO list:
+* add drag and drop
 
 # Contribution
 
