@@ -54,17 +54,17 @@ test('call expandAction on inner node', function(assert){
 });
 
 test('showOnly property', function(assert){
-  assert.expect(1);
+  assert.expect(2);
 
   this.set('node', Ember.$.extend(true, {}, fixtureTreeModel));
   this.render(
-    hbs`{{#ember-tree showOnly=1 node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
+    hbs`{{#ember-tree showOnly=1 showOtherTextFmt="rest %@" node=node as |node isExpanded|}}{{#ember-tree/trigger-expand}}expand{{/ember-tree/trigger-expand}}{{node.label}}{{/ember-tree}}`
   );
 
   const $tree = this.$();
-  assert.equal($tree.find('.hidden').size(), 3);
-  $tree.find('a:contains("1")').click();
-  assert.equal($tree.find('.hidden').size(), 0);
+  assert.equal($tree.find('.other-children.hidden').size(), 1);
+  $tree.find('a:contains("rest 1")').click();
+  assert.equal($tree.find('.other-children.hidden').size(), 0);
 });
 
 test('eagerCreate=true', function(assert){
@@ -92,7 +92,6 @@ test('eagerCreate=false', function(assert){
   );
 
   const $tree = this.$();
-  window.tree = $tree;
   assert.equal($tree.find('li').size(), 1);
   // TODO: add more asserts
   $tree.find('span:contains("expand-3")').click();
