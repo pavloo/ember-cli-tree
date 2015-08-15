@@ -10,6 +10,10 @@ export default Ember.Service.extend({
     const hash = {};
     var treeRoot = {};
 
+    if (!records || !get(records, 'length')){
+      return treeRoot;
+    }
+
     records.forEach((record)=>{
       hash[record.id] = record.getProperties(['id'].concat(attrs));
       hash[record.id]['children'] = [];

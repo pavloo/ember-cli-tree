@@ -1,12 +1,17 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:tree-builder', 'Unit | Service | tree builder', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: []
 });
 
-// Replace this with your real tests.
-test('it exists', function(assert) {
+test('returns empty object if nothing passed', function(assert) {
   var service = this.subject();
-  assert.ok(service);
+
+  assert.deepEqual(service.build(), {}, 'empty tree root');
+});
+
+test('returns empty object if no records passed', function(assert) {
+  var service = this.subject();
+
+  assert.deepEqual(service.build([]), {}, 'empty tree root');
 });
