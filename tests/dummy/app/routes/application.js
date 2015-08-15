@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 
   model(){
-    return this.store.find('groups');
+    return this.store.find('group');
   },
 
   treeBuilder: Ember.inject.service('tree-builder'),
@@ -11,9 +11,8 @@ export default Ember.Route.extend({
   actions: {
     buildTree(){
       const treeBuilder = this.get('treeBuilder');
-      const treeStructure = treeBuilder.build(this.get('model'));
-
-      this.set('tree', JSON.stringify(treeStructure));
+      const treeStructure = treeBuilder.build(this.controller.get('model'));
+      this.controller.set('treeObj', JSON.stringify(treeStructure));
     }
   }
 });
