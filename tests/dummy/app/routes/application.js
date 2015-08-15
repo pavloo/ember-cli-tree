@@ -11,7 +11,7 @@ export default Ember.Route.extend({
   actions: {
     buildTree(){
       const treeBuilder = this.get('treeBuilder');
-      const treeStructure = treeBuilder.build(this.controller.get('model'));
+      const treeStructure = treeBuilder.build(this.controller.get('model'), ['name']);
       this.controller.set('treeObj', JSON.stringify(treeStructure));
     }
   }

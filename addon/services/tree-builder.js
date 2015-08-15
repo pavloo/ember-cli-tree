@@ -6,12 +6,12 @@ const {
 
 export default Ember.Service.extend({
 
-  build(records){
+  build(records, attrs = []){
     const hash = {};
     var treeRoot = {};
 
     records.forEach((record)=>{
-      hash[record.id] = record.getProperties('id', 'name');
+      hash[record.id] = record.getProperties(['id'].concat(attrs));
       hash[record.id]['children'] = [];
     });
 
