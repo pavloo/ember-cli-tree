@@ -1,0 +1,12 @@
+{{#ember-tree/trigger-expand}}
+  {{#if node.children.length}}
+    {{#if isExpanded}}
+      {{fa-icon "caret-down"}}
+    {{else}}
+      {{fa-icon "caret-right"}}
+    {{/if}}
+  {{else}}
+    <i class="fake-caret"></i>
+  {{/if}}
+{{/ember-tree/trigger-expand}}
+{{node.label}}

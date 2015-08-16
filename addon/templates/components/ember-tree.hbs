@@ -1,15 +1,29 @@
-<li>{{yield node isExpanded}}</li>
+<li class="tree-node" role="treeitem">
+  {{#if hasBlock}}
+    {{yield node isExpanded}}
+  {{else}}
+    {{ember-tree/default-tree-node node=node isExpanded=isExpanded}}
+  {{/if}}
+</li>
 {{#ember-tree/if-helper flag=isExpanded eager=eagerCreate}}
   {{#each children as |child|}}
     {{#ember-tree expandAction="expandChild" eagerCreate=eagerCreate node=child as |child isExpanded|}}
-      {{yield child isExpanded}}
+      {{#if hasBlock}}
+        {{yield child isExpanded}}
+      {{else}}
+        {{ember-tree/default-tree-node node=child isExpanded=isExpanded}}
+      {{/if}}
     {{/ember-tree}}
   {{/each}}
   {{#if hasRest}}
     <div class="other-children {{unless showRest 'hidden'}}">
       {{#each childrenRest as |child|}}
         {{#ember-tree expandAction="expandChild" showOnly=showOnly eagerCreate=eagerCreate node=child as |child isExpanded|}}
-          {{yield child isExpanded}}
+          {{#if hasBlock}}
+            {{yield child isExpanded}}
+          {{else}}
+            {{ember-tree/default-tree-node node=child isExpanded=isExpanded}}
+          {{/if}}
         {{/ember-tree}}
       {{/each}}
     </div>

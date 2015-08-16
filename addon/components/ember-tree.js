@@ -9,7 +9,9 @@ const {
 export default Ember.Component.extend({
   layout: layout,
   tagName: 'ul',
-  classNames: ['ember-tree'],
+  classNames: ['ember-tree-children'],
+  attributeBindings: ['role'],
+  role: 'group',
 
   childrenKey: 'children',
   eagerCreate: true,
@@ -17,7 +19,7 @@ export default Ember.Component.extend({
   showRest: false,
   isExpanded: computed.alias('node.isExpanded'),
   showOtherTextFmt: 'Show Other %@',
-  sjowOnly: false,
+  showOnly: false,
 
   didInsertElement(){
     const $areaExpand = Ember.$(this.$().find('.ember-tree-node-trigger-expand')[0]);

@@ -36,7 +36,8 @@
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.3",
     "ember-json-api": "^0.6.0",
-    "ember-try": "0.0.6"
+    "ember-try": "0.0.6",
+    "ember-cli-font-awesome": "0.1.1"
   },
   "keywords": [
     "ember-addon"
