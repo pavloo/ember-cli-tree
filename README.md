@@ -1,6 +1,7 @@
 # Ember-cli-tree
+*simple tree UI component for Ember. No JQuery. Pure handlebars and recursion.*
 
-Simple tree UI component for Ember. No JQuery. Pure handlebars and recursion.
+[![npm version](https://badge.fury.io/js/ember-cli-tree.svg)](http://badge.fury.io/js/ember-cli-tree) [![Build Status](https://travis-ci.org/pavloo/ember-cli-tree.svg)](https://travis-ci.org/pavloo/ember-cli-tree)
 
 # Installation
 
