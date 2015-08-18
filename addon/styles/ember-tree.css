@@ -1,7 +1,13 @@
-.ember-tree {
-  list-style: none;  
+.ember-tree-children {
+  list-style: none;
+  padding-left: 1.2em;
 }
 
-.ember-tree .hidden{
+.ember-tree-children .fake-caret {
+  width: 6.438px;
+  display: inline-block;  
+}
+
+.ember-tree-children .hidden{
   display: none;
 }

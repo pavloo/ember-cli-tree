@@ -114,3 +114,15 @@ test('expand root if no action handler passed', function(assert){
   $tree.find('span:contains("expand")').first().click();
   assert.equal($tree.find('.hidden').size(), 4);
 });
+
+test('non-block form', function(assert){
+  assert.expect(1);
+
+  const treeHead = copy(fixtureTreeModel, true);
+  this.set('node', treeHead);
+  this.render(
+    hbs`{{ember-tree node=node}}`
+  );
+
+  assert.ok(true);
+});

@@ -5,7 +5,11 @@ import config from '../../config/environment';
 export default function startApp(attrs) {
   var application;
 
-  var attributes = Ember.merge({}, config.APP);
+  var attributes = Ember.merge({
+    pretender: {
+      enabled: true
+    }
+  }, config.APP);
   attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
 
   Ember.run(function() {
